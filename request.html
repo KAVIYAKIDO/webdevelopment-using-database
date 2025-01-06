@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Request</title>
+  <link rel="stylesheet" href="request.css">
+</head>
+<body>
+  <!-- Request Form -->
+  <div id="requestForm" class="section">
+    <h2>Request Form</h2>
+    <form id="form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="unit">Unit:</label>
+      <input type="text" id="unit" name="unit" required>
+
+      <label for="division">Division:</label>
+      <select id="division" name="division" required>
+        <option value="computer_services">Computer Services</option>
+        <option value="financial_accounting">Financial Accounting</option>
+        <option value="information_technology">Information Technology</option>
+        <option value="ece">Electronic and Communication Engineering</option>
+        <option value="ai_ds">Artificial Intelligence and Data Science</option>
+      </select>
+
+      <label for="cartridge">Select Printer Cartridge:</label>
+      <select id="cartridge" name="cartridge" required>
+        <option value="hp_laserjet">HP LaserJet</option>
+        <option value="epson_lq1150">Epson LQ1150</option>
+        <option value="brother_tn3448">Brother TN-3448</option>
+        <option value="hp_laserjet_1020">HP LaserJet 1020 Plus</option>
+      </select>
+      <label>Quantity:</label>
+      <input type="number" id="quantity" name="quantity" value="1" min="1">
+
+      <button type="button" onclick="submitRequest()">Submit</button>
+    </form>
+  </div>
+
+  <!-- Approval Form -->
+  <div id="approvalForm" class="section hidden">
+    <h2>Approval Form</h2>
+    <p id="approvalDetails"></p>
+    <button onclick="approveRequest()">Approve</button>
+    <button onclick="cancelRequest()">Cancel</button>
+  </div>
+
+  <!-- Stock Master -->
+  <div id="stockMaster" class="section hidden">
+    <h2>Stock Master</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Stock Count</th>
+          <th>Stock Purchase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="stockCount">400</td>
+          <td id="stockPurchase">2</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Global variable to store form data
+    let requestData = {};
+
+    // Function to handle form submission
+    function submitRequest() {
+      requestData.name = document.getElementById("name").value;
+      requestData.unit = document.getElementById("unit").value;
+      requestData.division = document.getElementById("division").value;
+      requestData.cartridge = document.getElementById("cartridge").value;
+      requestData.quantity = document.getElementById("quantity").value;
+
+      if (!requestData.name || !requestData.unit) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      alert("Request submitted and Approval pending.");
+      document.getElementById("requestForm").classList.add("hidden");
+      document.getElementById("approvalForm").classList.remove("hidden");
+
+      document.getElementById("approvalDetails").innerText = `
+        Name: ${requestData.name}, Unit: ${requestData.unit}, Division: ${requestData.division}, 
+        Cartridge: ${requestData.cartridge}, Quantity: ${requestData.quantity}
+      `;
+    }
+
+    // Function to handle approval
+    function approveRequest() {
+      alert("Approval successful.");
+      document.getElementById("approvalForm").classList.add("hidden");
+      document.getElementById("stockMaster").classList.remove("hidden");
+    }
+
+    // Function to handle cancellation
+    function cancelRequest() {
+      alert("Approval cancelled.");
+      document.getElementById("approvalForm").classList.add("hidden");
+      document.getElementById("requestForm").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
